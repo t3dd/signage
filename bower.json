@@ -1,0 +1,16 @@
+{
+  "name": "T3DD15.PI",
+  "version": "0.0.0",
+  "authors": [
+    "Sascha Nowak <sascha.nowak@netlogix.de>"
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "angular-resource": "~1.4.2",
+    "angular-animate": "~1.4.2",
+    "bootstrap": "~3.3.5"
+  },
+  "resolutions": {
+    "angular": "~1.4.2"
+  }
+}

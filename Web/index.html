@@ -1,0 +1,137 @@
+<html ng-app="t3dd15.signage" ng-controller="AppController as App">
+<head>
+	<title ng-bind="App.title"></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="Scripts/Components/angular/angular.js"></script>
+	<script src="Scripts/Components/angular-resource/angular-resource.js"></script>
+	<script src="Scripts/Components/angular-animate/angular-animate.js"></script>
+	<script src="Scripts/App/App.js"></script>
+	<link rel="stylesheet" href="Scripts/Components/bootstrap/dist/css/bootstrap.min.css">
+
+	<style>
+		body {
+			padding: 50px;
+		}
+
+		.media-heading {
+			max-width: 40vw;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.event {
+			padding: 20px;
+		}
+
+		.event:not(:last-child) {
+			border-bottom: 1px solid #EEE;
+		}
+
+		.time {
+			padding-right: 20px;
+		}
+
+		.event.ng-animate {
+			transition: 2s linear all;
+		}
+
+		.event.ng-enter {
+			opacity: 0;
+		}
+
+		.event.ng-enter.ng-enter-active {
+			opacity: 1;
+		}
+
+		.event.ng-leave {
+			opacity: 1;
+		}
+
+		.event.ng-leave.ng-leave-active {
+			opacity: 0;
+		}
+
+		.twitter-container {
+			min-height: 600px;
+		}
+
+		.sponsors {
+			position: relative;
+			padding-bottom: 50%;
+		}
+
+		.sponsor {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.sponsor img {
+			width: 100%;
+			display: inline-block;
+			max-height: 230px;
+		}
+
+		.animate-show {
+			opacity: 1;
+		}
+
+		.animate-show.ng-hide-add.ng-hide-add-active,
+		.animate-show.ng-hide-remove.ng-hide-remove-active {
+			transition: all linear 0.5s;
+		}
+
+		.animate-show.ng-hide {
+			opacity: 0;
+		}
+
+	</style>
+</head>
+<body ng-controller="EventListController as EventList">
+<div class="row">
+	<div class="col-sm-8">
+		<div class="media event" ng-repeat="event in EventList.events | orderBy:begin:true | limitTo:EventList.limit track by event.id" ng-class="{'bg-success': event.highlight == '1'}">
+			<div class="media-left" ng-if="EventList.getSpeakerAvatarForName(event.speaker1)">
+				<img ng-src="{{::EventList.getSpeakerAvatarForName(event.speaker1)}}" alt="" class="media-object img-circle" width="100" height="100">
+			</div>
+			<div class="media-body">
+				<h4 class="media-heading">{{event.speaker1}}</h4>
+
+				<h2 class="media-heading">{{event.title}}</h2>
+
+				<p class="h5"><span class="glyphicon glyphicon-time"></span>
+					<span class="time">{{event.begin}} <span ng-if="event.end">- {{event.end}}</span></span>
+					<span class="glyphicon glyphicon-home"></span> {{event.room}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="twitter-container">
+			<a class="twitter-timeline" href="https://twitter.com/hashtag/t3dd15" data-widget-id="621480847791771648">#t3dd15-Tweets</a>
+		</div>
+
+		<div class="sponsors" ng-controller="SponsorController as Sponsors">
+			<div class="sponsor animate-show" ng-show="$index == Sponsors.sponsor" ng-repeat="sponsor in Sponsors.sponsors">
+				<h2 class="text-center">{{sponsor.type}}</h2>
+				<div class="center-block">
+					<img class="img-responsive" ng-src="{{'Assets/Logos/' + sponsor.logo}}" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>!function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+	if (!d.getElementById(id)) {
+		js = d.createElement(s);
+		js.id = id;
+		js.src = p + "://platform.twitter.com/widgets.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}
+}(document, "script", "twitter-wjs");</script>
+</body>
+</html>

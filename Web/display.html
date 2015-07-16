@@ -1,0 +1,69 @@
+<html ng-app="t3dd15.signage" ng-controller="AppController as App">
+<head>
+	<base href="http://signage/">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="Scripts/Components/angular/angular.js"></script>
+
+	<script>
+		(function() {
+			'use strict';
+			var resources = {
+				signage: 'https://spreadsheets.google.com/feeds/list/1-T0NAIjAVqTS15l_fwAr9p6lWL4LbduplvFXfp6BIxg/od7/public/full?alt=json'
+			};
+			var app = angular.module('t3dd15.signage', []);
+			app.config(AppConfig);
+			app.controller('AppController', AppController);
+
+			AppConfig.$inject = ['$locationProvider'];
+			function AppConfig($locationProvider) {
+				$locationProvider.html5Mode({enabled: true, rewriteLinks: false});
+			}
+
+			AppController.$inject = ['$location', '$http'];
+			function AppController($location, $http) {
+				var self = this;
+				self.diplayName = $location.search().hostname || 'display-1';
+				self.url = 'http://signage/';
+
+				function transformFeedResult(result) {
+					var newResult = [];
+					angular.forEach(result.feed.entry, function(eventEntry) {
+						var event = {};
+						angular.forEach(Object.keys(eventEntry), function(propertyName) {
+							if (propertyName.indexOf('gsx') >= 0) {
+								event[propertyName.substr(4)] = eventEntry[propertyName].$t;
+							} else if (angular.isArray(eventEntry[propertyName])) {
+								event[propertyName] = eventEntry[propertyName];
+							} else {
+								event[propertyName] = eventEntry[propertyName].$t;
+							}
+						});
+						// Some Events have the same uuid, so make it real unique
+						event.id = event.id + (event.begin ? event.begin : '');
+						newResult.push(event);
+					});
+					return newResult;
+
+				}
+
+			}
+		})()
+	</script>
+	<style>
+		body, html {
+			margin: 0;
+			padding: 0;
+		}
+
+		iframe {
+			border: 0 none;
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body >
+	<iframe ng-src="{{App.url}}"></iframe>
+</body>
+</html>
