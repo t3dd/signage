@@ -9,22 +9,31 @@
 		(function() {
 			'use strict';
 			var resources = {
-				signage: 'https://spreadsheets.google.com/feeds/list/1-T0NAIjAVqTS15l_fwAr9p6lWL4LbduplvFXfp6BIxg/od7/public/full?alt=json'
+				signage: 'https://spreadsheets.google.com/feeds/list/1-T0NAIjAVqTS15l_fwAr9p6lWL4LbduplvFXfp6BIxg/ogr3mlf/public/full?alt=json'
 			};
 			var app = angular.module('t3dd15.signage', []);
 			app.config(AppConfig);
 			app.controller('AppController', AppController);
 
-			AppConfig.$inject = ['$locationProvider'];
-			function AppConfig($locationProvider) {
+			AppConfig.$inject = ['$locationProvider', '$sceProvider'];
+			function AppConfig($locationProvider, $sceProvider) {
+				$sceProvider.enabled(false);
 				$locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 			}
 
-			AppController.$inject = ['$location', '$http'];
-			function AppController($location, $http) {
-				var self = this;
-				self.diplayName = $location.search().hostname || 'display-1';
+			AppController.$inject = ['$location', '$http', '$interval'];
+			function AppController($location, $http, $interval) {
+				var self = this, hostname = $location.search().hostname || 'display-1';
 				self.url = 'http://signage/';
+
+				function fetchDisplayFeed() {
+					$http.get(resources.signage).success(function(result) {
+						var currentDisplay = transformFeedResult(result).filter(function(display) {
+							return display.displayname == hostname;
+						})[0];
+						self.url = angular.isString(currentDisplay.url) ? currentDisplay.url : 'http://signage/';
+					});
+				}
 
 				function transformFeedResult(result) {
 					var newResult = [];
@@ -44,8 +53,10 @@
 						newResult.push(event);
 					});
 					return newResult;
-
 				}
+
+				fetchDisplayFeed();
+				$interval(fetchDisplayFeed, 6000);
 
 			}
 		})()
