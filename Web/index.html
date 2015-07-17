@@ -94,7 +94,7 @@
 <body ng-controller="EventListController as EventList">
 <div class="row">
 	<div class="col-sm-8">
-		<div class="media event" ng-repeat="event in EventList.events | orderBy:begin:true | limitTo:EventList.limit track by event.id" ng-class="{'bg-success': event.highlight == '1'}">
+		<div class="media event" ng-repeat="event in EventList.events | orderBy:begin:true | limitTo:EventList.limit track by event.id" ng-class="{'bg-success': event.highlight == '1'}" ng-if="!EventList.lightningTime">
 			<div class="media-left" ng-if="EventList.getSpeakerAvatarForName(event.speaker1)">
 				<img ng-src="{{::EventList.getSpeakerAvatarForName(event.speaker1)}}" alt="" class="media-object img-circle" width="100" height="100">
 			</div>
@@ -106,6 +106,17 @@
 				<p class="h5"><span class="glyphicon glyphicon-time"></span>
 					<span class="time">{{event.begin}} <span ng-if="event.end">- {{event.end}}</span></span>
 					<span class="glyphicon glyphicon-home"></span> {{event.room}}</p>
+			</div>
+		</div>
+		<div class="media event" ng-if="EventList.lightningTime">
+			<div class="media-body">
+				<h4 class="media-heading">Several speakers</h4>
+
+				<h2 class="media-heading">Lightning-talk</h2>
+
+				<p class="h5"><span class="glyphicon glyphicon-time"></span>
+					<span class="time">09:15 - 10:00</span>
+					<span class="glyphicon glyphicon-home"></span> jweiland.net hall</p>
 			</div>
 		</div>
 	</div>

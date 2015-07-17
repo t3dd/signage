@@ -93,6 +93,7 @@
 	EventListController.$inject = ['$interval', 'EventFactory', 'LeisureFactory', 'SpeakerFactory'];
 	function EventListController($interval, EventFactory, LeisureFactory, SpeakerFactory) {
 		var self = this, weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], d = new Date();
+		self.lightningTime = false;
 		self.speakers = [];
 		self.events = [];
 		self.day = weekdays[d.getDay()];
@@ -109,6 +110,8 @@
 		function getEvents() {
 			d = new Date();
 			self.begin = ((d.getHours() + (d.getMinutes() / 60)) / 24);
+			self.lightningTime = self.begin < 0.416666667;
+			console.log(self.lightningTime);
 			EventFactory.get({day: self.day, begin: self.begin, maxCol: self.limit}, function(result) {
 				var newEvents = transformFeedResult(result);
 				if (newEvents.length && self.begin < 0.77) {
