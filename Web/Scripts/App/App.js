@@ -41,46 +41,46 @@
 	function SponsorController($interval) {
 		var self = this;
 		self.sponsors = [{
-			type: 'Premium Sponsors',
+			type: 'Premium Sponsor',
 			logo: 'jweiland-net-logo.svg'
 		}, {
-			type: 'Premium Sponsors',
+			type: 'Premium Sponsor',
 			logo: 'aoe-logo.svg'
 		}, {
-			type: 'Premium Sponsors',
+			type: 'Premium Sponsor',
 			logo: 'punkt-de-logo.svg'
 		}, {
-			type: 'Premium Sponsors',
+			type: 'Premium Sponsor',
 			logo: 'hiscox-logo.svg'
 		}, {
 			type: 'T-Shirt Sponsor',
 			logo: 'sitegeist-logo.svg'
 		}, {
-			type: 'Coding Night Sponsors',
+			type: 'Coding Night Sponsor',
 			logo: 'jweiland-net-logo.svg'
 		}, {
-			type: 'Social Event Sponsors',
+			type: 'Social Event Sponsor',
 			logo: 'dkd-logo.svg'
 		}, {
-			type: 'Social Event Sponsors',
+			type: 'Social Event Sponsor',
 			logo: 'teamneusta-logo.svg'
 		}, {
-			type: 'Value Sponsors',
+			type: 'Value Sponsor',
 			logo: 'lufed-it-logo.svg'
 		}, {
-			type: 'Value Sponsors',
+			type: 'Value Sponsor',
 			logo: 'hetzner-logo.svg'
 		}, {
-			type: 'Supporters',
+			type: 'Supporter',
 			logo: 'rheinschafe-logo.svg'
 		}, {
-			type: 'Internet Sponsors',
+			type: 'Internet Sponsor',
 			logo: 'teamix-logo.svg'
 		}, {
-			type: 'Internet Sponsors',
+			type: 'Internet Sponsor',
 			logo: 'netlogix-logo.svg'
 		}, {
-			type: 'Internet Sponsors',
+			type: 'Internet Sponsor',
 			logo: 'aerohive-logo.svg'
 		}];
 		self.sponsor = 12;
@@ -96,9 +96,10 @@
 		self.lightningTime = false;
 		self.speakers = [];
 		self.events = [];
+		self.timer = new Date();
 		self.day = weekdays[d.getDay()];
 		self.begin = ((d.getHours() + (d.getMinutes() / 60)) / 24);
-		self.limit = 6;
+		self.limit = 7;
 
 		self.getSpeakerAvatarForName = function(name) {
 			var speaker = self.speakers.filter(function(speaker) {
@@ -137,6 +138,10 @@
 			});
 		}
 
+		function updateTimer() {
+			self.timer = new Date();
+		}
+
 		function transformFeedResult(result) {
 			var newResult = [];
 			angular.forEach(result.feed.entry, function(eventEntry) {
@@ -161,6 +166,7 @@
 		getEvents();
 		getSpeakers();
 		$interval(getEvents, 60000);
+		$interval(updateTimer, 1000);
 	}
 
 }(window, angular));
