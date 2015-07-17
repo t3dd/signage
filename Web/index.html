@@ -117,7 +117,9 @@
 				<h2 class="media-heading">Lightning-talk</h2>
 
 				<p class="h5"><span class="glyphicon glyphicon-time"></span>
-					<span class="time">09:15 - 10:00</span>
+					<span class="time" ng-if="EventList.begin < 0.45">09:15 - 10:00</span>
+					<span class="time" ng-if="EventList.begin > 0.5 && EventList.begin < 0.6">14:00 - 14:45</span>
+					<span class="time" ng-if="EventList.begin > 0.6">16:15 - 16:45</span>
 					<span class="glyphicon glyphicon-home"></span> jweiland.net hall</p>
 			</div>
 		</div>

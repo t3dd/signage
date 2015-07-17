@@ -111,8 +111,8 @@
 		function getEvents() {
 			d = new Date();
 			self.begin = ((d.getHours() + (d.getMinutes() / 60)) / 24);
-			self.lightningTime = self.begin < 0.416666667;
-			console.log(self.lightningTime);
+			// from 9:00-10:00 14:00-14:45 16:15-16:45
+			self.lightningTime = (self.begin > 0.375 && self.begin < 0.416) || (self.begin > 0.500 && self.begin < 0.6145) || (self.begin > 0.665 && self.begin < 0.6979);
 			EventFactory.get({day: self.day, begin: self.begin, maxCol: self.limit}, function(result) {
 				var newEvents = transformFeedResult(result);
 				if (newEvents.length && self.begin < 0.77) {
