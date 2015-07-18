@@ -95,7 +95,7 @@
 		self.sponsor = 12;
 
 		$interval(function() {
-			self.sponsor = Math.floor(Math.random() * (14 - 1)) + 1;
+			self.sponsor = Math.floor(Math.random() * (self.sponsor.length - 1)) + 1;
 		}, 5000)
 	}
 
