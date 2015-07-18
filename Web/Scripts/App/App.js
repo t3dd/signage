@@ -57,7 +57,7 @@
 			logo: 'sitegeist-logo.svg'
 		}, {
 			type: 'Coding Night Sponsor',
-			logo: 'jweiland-net-logo.svg'
+			logo: 'hiscox-logo.svg'
 		}, {
 			type: 'Social Event Sponsor',
 			logo: 'dkd-logo.svg'
@@ -82,6 +82,15 @@
 		}, {
 			type: 'Internet Sponsor',
 			logo: 'aerohive-logo.svg'
+		}, {
+			type: 'Organizer',
+			logo: 'dfau-logo.svg'
+		}, {
+			type: 'Organizer',
+			logo: 'kienastdv-logo.svg'
+		}, {
+			type: 'Organizer',
+			logo: 'netlogix-logo.svg'
 		}];
 		self.sponsor = 12;
 
